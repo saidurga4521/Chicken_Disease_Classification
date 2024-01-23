@@ -49,55 +49,41 @@ class ConfigurationManager:
 
 
     def get_prepare_callback_config(self) -> PrepareCallbacksConfig:
-        try:
-            config = self.config.prepare_callbacks
-        except KeyError:
-            # Handle the absence of 'prepare_callbacks' key, set default values, or raise an error.
-            # For now, I'll set a default empty dictionary.
-            config = {}
-
-        model_ckpt_dir = os.path.dirname(config.get('checkpoint_model_filepath', ''))
+        config = self.config.prepare_callbacks
+        model_ckpt_dir = os.path.dirname(config.checkpoint_model_filepath)
         create_directories([
             Path(model_ckpt_dir),
-            Path(config.get('tensorboard_root_log_dir', ''))
+            Path(config.tensorboard_root_log_dir)
         ])
 
         prepare_callback_config = PrepareCallbacksConfig(
-            root_dir=Path(config.get('root_dir', '')),
-            tensorboard_root_log_dir=Path(config.get('tensorboard_root_log_dir', '')),
-            checkpoint_model_filepath=Path(config.get('checkpoint_model_filepath', ''))
+            root_dir=Path(config.root_dir),
+            tensorboard_root_log_dir=Path(config.tensorboard_root_log_dir),
+            checkpoint_model_filepath=Path(config.checkpoint_model_filepath)
         )
 
         return prepare_callback_config
     
     
-
     def get_training_config(self) -> TrainingConfig:
-        try:
-            training = self.config.training
-        except KeyError:
-        # Handle the absence of 'training' key, set default values, or raise an error.
-        # For now, I'll set a default empty dictionary.
-            training = {}
-
+        training = self.config.training
         prepare_base_model = self.config.prepare_base_model
         params = self.params
         training_data = os.path.join(self.config.data_ingestion.unzip_dir, "Chicken-fecal-images")
         create_directories([
-            Path(training.get('root_dir', ''))  # Use get() to handle missing key
-    ])
+            Path(training.root_dir)
+        ])
 
         training_config = TrainingConfig(
-           root_dir=Path(training.get('root_dir', '')),
-           trained_model_path=Path(training.get('trained_model_path', '')),
-           updated_base_model_path=Path(prepare_base_model.get('updated_base_model_path', '')),
-           training_data=Path(training_data),
-           params_epochs=params.get('EPOCHS', 0),  # Replace 0 with a suitable default value
-           params_batch_size=params.get('BATCH_SIZE', 0),  # Replace 0 with a suitable default value
-           params_is_augmentation=params.get('AUGMENTATION', False),  # Replace False with a suitable default value
-           params_image_size=params.get('IMAGE_SIZE', 0)  # Replace 0 with a suitable default value
-    )
+            root_dir=Path(training.root_dir),
+            trained_model_path=Path(training.trained_model_path),
+            updated_base_model_path=Path(prepare_base_model.updated_base_model_path),
+            training_data=Path(training_data),
+            params_epochs=params.EPOCHS,
+            params_batch_size=params.BATCH_SIZE,
+            params_is_augmentation=params.AUGMENTATION,
+            params_image_size=params.IMAGE_SIZE
+        )
 
         return training_config
-
         
