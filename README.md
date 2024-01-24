@@ -12,3 +12,47 @@
 8.Update the main.py
 9.Update the dvc.yam
 
+# How to run?
+### STEPS:
+
+Clone the repository
+
+```bash
+https://github.com/saidurga4521/chicken_disease_classification-n
+```
+### STEP 01- Create a conda environment after opening the repository
+
+```bash
+conda create -n cnncls python=3.8 -y
+```
+
+```bash
+conda activate cnncls
+```
+
+
+### STEP 02- install the requirements
+```bash
+pip install -r requirements.txt
+```
+
+
+```bash
+# Finally run the following command
+python app.py
+```
+
+Now,
+```bash
+open up you local host and port
+```
+
+
+### DVC cmd
+
+1. dvc init
+2. dvc repro
+3. dvc dag
+
+
+
