@@ -1,5 +1,3 @@
-import sys
-sys.path.append('C:\Users\saika\OneDrive\Desktop\projects\chicken_disease_classification')
 
 import os
 import urllib.request as request
